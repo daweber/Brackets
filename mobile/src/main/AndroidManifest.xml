@@ -10,17 +10,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Map"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".List"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_list">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
