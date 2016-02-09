@@ -3,7 +3,6 @@
 
     <string name="dummy_button">Hit Me!</string>
     <string name="dummy_content">Changed This, again. This is just for origin.</string>
-    <string name="title_activity_list">NCAA 64: Round %1$d</string>
     <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="current_round_format">NCAA Round: %1$d</string>
 </resources>
