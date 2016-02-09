@@ -89,29 +89,30 @@ public class Bracket extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class RoundListFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String ARG_ROUND_NUMBER = "round_number";
+        private static int ROUND_NUMBER;
 
-        public PlaceholderFragment() {
+        public RoundListFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static RoundListFragment newInstance(int round) {
+            ROUND_NUMBER = round;
+            RoundListFragment fragment = new RoundListFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt(ARG_ROUND_NUMBER, round);
             fragment.setArguments(args);
             return fragment;
         }
 
-        //TODO: Tie GameListAdapter to Recyclerview
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -123,14 +124,43 @@ public class Bracket extends AppCompatActivity {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             roundList.setLayoutManager(llm);
 
-            GameListAdapter ga = new GameListAdapter(createList(32));
+            GameListAdapter ga = new GameListAdapter(createList(ROUND_NUMBER));
             roundList.setAdapter(ga);
 
             return rootView;
         }
 
-        private List<Game> createList(int size) {
+        private List<Game> createList(int round) {
             List<Game> result = new ArrayList<Game>();
+
+            int size;
+
+            switch (round) {
+                case 1:
+                    size = 4;
+                    break;
+                case 2:
+                    size = 32;
+                    break;
+                case 3:
+                    size = 16;
+                    break;
+                case 4:
+                    size = 8;
+                    break;
+                case 5:
+                    size = 4;
+                    break;
+                case 6:
+                    size = 2;
+                    break;
+                case 7:
+                    size = 1;
+                    break;
+                default:
+                    size = 0;
+                    break;
+            }
 
             for (int i = 1; i <= size; i++) {
                 Game g = new Game();
@@ -154,14 +184,11 @@ public class Bracket extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return RoundListFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 7;
         }
 
