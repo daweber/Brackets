@@ -18,6 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bracket extends AppCompatActivity {
     private final static String TAG = "b64.ListActivity";
     /**
@@ -116,12 +119,26 @@ public class Bracket extends AppCompatActivity {
 
             RecyclerView roundList = (RecyclerView) rootView.findViewById(R.id.games_list);
             roundList.setHasFixedSize(true);
-
             LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             roundList.setLayoutManager(llm);
 
+            GameListAdapter ga = new GameListAdapter(createList(32));
+            roundList.setAdapter(ga);
+
             return rootView;
+        }
+
+        private List<Game> createList(int size) {
+            List<Game> result = new ArrayList<Game>();
+
+            for (int i = 1; i <= size; i++) {
+                Game g = new Game();
+                g.tOne = Game.TEAM_ONE_PREFIX + i;
+                g.tTwo = Game.TEAM_TWO_PREFIX + i;
+                result.add(g);
+            }
+            return result;
         }
     }
 
