@@ -43,13 +43,13 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
     public static class GameViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView vTOne;
-        protected TextView vTTwo;
+        protected ResizeTextView vTOne;
+        protected ResizeTextView vTTwo;
 
         public GameViewHolder(View v) {
             super(v);
-            vTOne = (TextView) v.findViewById(R.id.tOne);
-            vTTwo = (TextView) v.findViewById(R.id.tTwo);
+            vTOne = (ResizeTextView) v.findViewById(R.id.tOne);
+            vTTwo = (ResizeTextView) v.findViewById(R.id.tTwo);
         }
     }
 }

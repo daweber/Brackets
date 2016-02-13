@@ -105,7 +105,7 @@ public class Bracket extends AppCompatActivity {
         private List<Game> getRoundList(int round) {
             List<Game> result = new ArrayList<>();
 
-            int size;
+            int size = 0;
 
             switch (round) {
                 case 1:
@@ -130,7 +130,7 @@ public class Bracket extends AppCompatActivity {
                     size = 1;
                     break;
                 default:
-                    size = 0;
+                    size = 666;
                     break;
             }
 

@@ -12,23 +12,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <com.daweber.brackets.ResizeTextView
             android:id="@+id/tOne"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:gravity="center_vertical"
-            android:text="Seed - City Mascot - Points"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18dp" />
+            android:textSize="18sp"
+            android:maxLines="1"/>
 
-        <TextView
+        <com.daweber.brackets.ResizeTextView
             android:id="@+id/tTwo"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:gravity="center_vertical"
-            android:text="Seed - City Mascot - Points"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18dp" />
+            android:textSize="18sp"
+            android:maxLines="1"/>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>
