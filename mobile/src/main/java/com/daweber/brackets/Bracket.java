@@ -13,8 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,6 +21,7 @@ import java.util.List;
 
 public class Bracket extends AppCompatActivity {
     private final static String TAG = "b64.ListActivity";
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -31,12 +30,11 @@ public class Bracket extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v13.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    private RoundPagerAdapter mRoundPagerAdapter;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private ViewPager roundPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,64 +49,37 @@ public class Bracket extends AppCompatActivity {
             mActionBar.setDisplayUseLogoEnabled(true);
             mActionBar.setDisplayShowHomeEnabled(true);
         }
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mRoundPagerAdapter = new RoundPagerAdapter(getFragmentManager());
+        roundPager = (ViewPager) findViewById(R.id.container);
+        roundPager.setAdapter(mRoundPagerAdapter);
 
         PagerTitleStrip weekPagerTitle =
                 (PagerTitleStrip) findViewById(R.id.round_pager_title_strip);
         weekPagerTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class RoundListFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_ROUND_NUMBER = "round_number";
-        private static int ROUND_NUMBER;
+    public static class RoundFragment extends Fragment {
+        private static final String TAG = "b64.RoundFragment";
 
-        public RoundListFragment() {
+        private static final String ARG_ROUND_NUMBER = "round_number";
+        private int roundNumber;
+
+        public RoundFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static RoundListFragment newInstance(int round) {
-            ROUND_NUMBER = round;
-            RoundListFragment fragment = new RoundListFragment();
+        public static RoundFragment newInstance(int round) {
+            RoundFragment fragment = new RoundFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_ROUND_NUMBER, round);
+            fragment.roundNumber = round;
             fragment.setArguments(args);
             return fragment;
         }
@@ -124,14 +95,15 @@ public class Bracket extends AppCompatActivity {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             roundList.setLayoutManager(llm);
 
-            GameListAdapter ga = new GameListAdapter(createList(ROUND_NUMBER));
+            GameListAdapter ga = new GameListAdapter(getRoundList(roundNumber));
             roundList.setAdapter(ga);
 
             return rootView;
         }
 
-        private List<Game> createList(int round) {
-            List<Game> result = new ArrayList<Game>();
+        //TODO: This should go get the real gamesList from local database
+        private List<Game> getRoundList(int round) {
+            List<Game> result = new ArrayList<>();
 
             int size;
 
@@ -176,15 +148,17 @@ public class Bracket extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class RoundPagerAdapter extends FragmentPagerAdapter {
+        private final static String TAG = "b64.RoundPagerAdapter";
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public RoundPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return RoundListFragment.newInstance(position + 1);
+            Log.d(TAG, "getItem() running");
+            return RoundFragment.newInstance(position + 1);
         }
 
         @Override
