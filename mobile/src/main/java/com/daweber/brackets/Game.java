@@ -1,7 +1,6 @@
 package com.daweber.brackets;
 
 import android.location.Address;
-import android.location.Location;
 
 import java.util.Date;
 

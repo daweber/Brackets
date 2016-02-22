@@ -2,6 +2,7 @@ package com.daweber.brackets;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
@@ -13,14 +14,22 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.daweber.brackets.view.activity.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bracket extends AppCompatActivity {
+public class BracketActivity extends AppCompatActivity {
     private final static String TAG = "b64.ListActivity";
+
+    private final static Boolean LOCKED = true;
+    private final static Boolean UNLOCKED = false;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -35,16 +44,22 @@ public class Bracket extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager roundPager;
+    private Menu menu;
+
+    private Boolean lockStatus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "OnCreated");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_bracket);
+
+        lockStatus = UNLOCKED;
 
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null) {
-            mActionBar.setTitle("NCAA 64");
+            mActionBar.setElevation(0);
             mActionBar.setLogo(R.mipmap.ic_launcher);
             mActionBar.setDisplayUseLogoEnabled(true);
             mActionBar.setDisplayShowHomeEnabled(true);
@@ -185,6 +200,45 @@ public class Bracket extends AppCompatActivity {
                     return "CHAMPIONSHIP";
             }
             return null;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_list, menu);
+        this.menu = menu;
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_print:
+                Toast.makeText(this, "print PDF coming soon", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.action_share:
+                Toast.makeText(this, "share Bracket coming soon", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_lock_toggle:
+                toggleActionBarLock(item);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleActionBarLock(MenuItem item) {
+        if (lockStatus) {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_unlocked_white));
+            lockStatus = UNLOCKED;
+        } else {
+            item.setIcon(getResources().getDrawable(R.drawable.ic_locked_red));
+            lockStatus = LOCKED;
         }
     }
 }

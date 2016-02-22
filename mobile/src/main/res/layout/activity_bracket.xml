@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/toolbarBracketButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight=".5"
+                android:background="@color/colorPrimaryDark"
+                android:drawableLeft="@drawable/ic_brackets_red"
+                android:drawableStart="@drawable/ic_brackets_red"
+                android:padding="8dp"
+                android:text="NCAA [2016]"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/toolbarPicksButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight=".5"
+                android:background="@color/colorPrimaryDark"
+                android:drawableLeft="@drawable/ic_picks_red"
+                android:drawableStart="@drawable/ic_picks_red"
+                android:padding="8dp"
+                android:text="Office Pool"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".BracketActivity">
+
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/round_pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@color/colorPrimaryDark"
+            android:paddingBottom="4dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
+    </android.support.v4.view.ViewPager>
+</LinearLayout>
