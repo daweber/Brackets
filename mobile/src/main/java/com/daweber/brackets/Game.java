@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by moweber on 2/8/2016.
  */
 public class Game {
+    protected Boolean isFinal;
     protected String tOne;
     protected String tTwo;
     protected int tOneScore;
@@ -17,6 +18,6 @@ public class Game {
     protected Date gDate;
     protected String gTitle;
 
-    protected static final String TEAM_ONE_PREFIX = "Home Team ";
-    protected static final String TEAM_TWO_PREFIX = "Really Really Really Really Long Named Away Team";
+    protected static final String TEAM_ONE_PREFIX = "Home State Team ";
+    protected static final String TEAM_TWO_PREFIX = "University of Team ";
 }

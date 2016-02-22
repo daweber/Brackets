@@ -44,10 +44,9 @@ public class BracketActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager roundPager;
+
     private Menu menu;
-
     private Boolean lockStatus;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +54,7 @@ public class BracketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bracket);
 
+        // Replace with real locked status of PickSet
         lockStatus = UNLOCKED;
 
         ActionBar mActionBar = getSupportActionBar();
@@ -110,7 +110,7 @@ public class BracketActivity extends AppCompatActivity {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             roundList.setLayoutManager(llm);
 
-            GameListAdapter ga = new GameListAdapter(getRoundList(roundNumber));
+            GameListAdapter ga = new GameListAdapter(container.getContext(),getRoundList(roundNumber));
             roundList.setAdapter(ga);
 
             return rootView;
@@ -145,12 +145,13 @@ public class BracketActivity extends AppCompatActivity {
                     size = 1;
                     break;
                 default:
-                    size = 666;
+                    size = 3;
                     break;
             }
 
             for (int i = 1; i <= size; i++) {
                 Game g = new Game();
+                g.isFinal = (i % 2) == 0;
                 g.tOne = Game.TEAM_ONE_PREFIX + i;
                 g.tTwo = Game.TEAM_TWO_PREFIX + i;
                 result.add(g);
@@ -213,8 +214,8 @@ public class BracketActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
+
+        switch (item.getItemId()) {
             case R.id.action_print:
                 Toast.makeText(this, "print PDF coming soon", Toast.LENGTH_SHORT).show();
                 return true;
