@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
@@ -72,6 +73,15 @@ public class BracketActivity extends AppCompatActivity {
         PagerTitleStrip weekPagerTitle =
                 (PagerTitleStrip) findViewById(R.id.round_pager_title_strip);
         weekPagerTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+
+        FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.action_create_picks);
+        if (mFab != null) {
+            mFab.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Log.d(TAG, "Fab Pressed!");
+                }
+            });
+        }
     }
 
     /**
@@ -110,7 +120,7 @@ public class BracketActivity extends AppCompatActivity {
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             roundList.setLayoutManager(llm);
 
-            GameListAdapter ga = new GameListAdapter(container.getContext(),getRoundList(roundNumber));
+            GameListAdapter ga = new GameListAdapter(container.getContext(), getRoundList(roundNumber));
             roundList.setAdapter(ga);
 
             return rootView;
