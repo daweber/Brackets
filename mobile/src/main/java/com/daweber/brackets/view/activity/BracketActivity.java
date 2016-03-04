@@ -1,4 +1,4 @@
-package com.daweber.brackets;
+package com.daweber.brackets.view.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -19,14 +19,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.daweber.brackets.view.activity.SettingsActivity;
+import com.daweber.brackets.R;
+import com.daweber.brackets.view.GameListAdapter;
+import com.daweber.brackets.vo.Game;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BracketActivity extends AppCompatActivity {
+public class BracketActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "b64.ListActivity";
 
     private final static Boolean LOCKED = true;
@@ -74,13 +77,34 @@ public class BracketActivity extends AppCompatActivity {
                 (PagerTitleStrip) findViewById(R.id.round_pager_title_strip);
         weekPagerTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
 
-        FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.action_create_picks);
+        Button pickBracketButton = (Button) findViewById(R.id.toolbarBracketButton);
+        if (pickBracketButton != null) {
+            pickBracketButton.setOnClickListener(this);
+        }
+
+        Button pickPicksButtons = (Button) findViewById(R.id.toolbarPicksButton);
+        if (pickPicksButtons != null) {
+            pickPicksButtons.setOnClickListener(this);
+        }
+
+        FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.toolbarCreatePicksetFab);
         if (mFab != null) {
-            mFab.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Log.d(TAG, "Fab Pressed!");
-                }
-            });
+            mFab.setOnClickListener(this);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.toolbarPicksButton:
+                Toast.makeText(this, "Select Picks", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.toolbarBracketButton:
+                Toast.makeText(this, "Select Bracket", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.toolbarCreatePicksetFab:
+                Toast.makeText(this, "Create Pickset", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 

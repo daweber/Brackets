@@ -1,4 +1,4 @@
-package com.daweber.brackets;
+package com.daweber.brackets.view;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.daweber.brackets.vo.Game;
+import com.daweber.brackets.R;
+import com.daweber.brackets.ResizeTextView;
 
 import java.util.List;
 
