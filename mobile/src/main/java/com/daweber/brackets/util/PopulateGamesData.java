@@ -1,19 +1,30 @@
 package com.daweber.brackets.util;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.daweber.brackets.model.BracketsDatabase;
 import com.daweber.brackets.vo.Game;
 import com.daweber.brackets.vo.Game$Table;
+import com.raizlabs.android.dbflow.annotation.Migration;
 import com.raizlabs.android.dbflow.sql.language.Insert;
+import com.raizlabs.android.dbflow.sql.migration.BaseMigration;
 
 /**
- * Hard-coded Data (eventually data will be gotten from network call
+ * Migration Class
  */
-public class BracketsData {
+@Migration(version = 0, databaseName = BracketsDatabase.NAME)
+public class PopulateGamesData extends BaseMigration {
     private static final String TAG = "b64.BracketsData";
 
-    public BracketsData() {
-        Log.d(TAG, "Constructed");
+    @Override
+    public void migrate(SQLiteDatabase database) {
+        Log.d(TAG, "Migrating Data...");
+        //populateGames();
+    }
+
+    public void populateGames() {
+
         Insert.into(Game.class).columns(
                 Game$Table.GID,
                 Game$Table.BID,
@@ -30,5 +41,4 @@ public class BracketsData {
                         "Bradley Center (Milwaukee, WI)").query();
 
     }
-
 }

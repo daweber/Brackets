@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BracketActivity extends AppCompatActivity implements View.OnClickListener {
-    private final static String TAG = "b64.ListActivity";
+    private final static String TAG = "b64.BracketActivity";
 
     private final static Boolean LOCKED = true;
     private final static Boolean UNLOCKED = false;
@@ -54,9 +54,27 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "OnCreated");
+        Log.d(TAG, "OnCreating");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bracket);
+
+        // Testing DB Migration/Init
+//        Insert.into(Game.class).columns(
+//                Game$Table.GID,
+//                Game$Table.BID,
+//                Game$Table.BROUND,
+//                Game$Table.ISFINAL,
+//                Game$Table.TONE,
+//                Game$Table.TONESCORE,
+//                Game$Table.TTWO,
+//                Game$Table.TTWOSCORE,
+//                Game$Table.GDETAILS)
+//                .values(1, 1, 1, false,
+//                        "University of Illinois", 78,
+//                        "Marquette University", 81,
+//                        "Bradley Center (Milwaukee, WI)").query();
+//        Log.d(TAG, "Data says: " +
+//                new Select().from(Game.class).querySingle().tOne + " will win!");
 
         // Replace with real locked status of PickSet
         lockStatus = UNLOCKED;
@@ -91,6 +109,8 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
         if (mFab != null) {
             mFab.setOnClickListener(this);
         }
+
+        Log.d(TAG, "OnCreated");
     }
 
     @Override
@@ -152,7 +172,6 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
         //TODO: This should go get the real gamesList from local database
         private List<Game> getRoundList(int round) {
-            Log.d(TAG, "getting round list...");
 
             List<Game> result = new ArrayList<>();
 
@@ -209,7 +228,6 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         public Fragment getItem(int position) {
-            Log.d(TAG, "getItem() running");
             return RoundFragment.newInstance(position + 1);
         }
 

@@ -3,7 +3,6 @@ package com.daweber.brackets.view;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
         gC.vTOne.setText(g.tOne);
         gC.vTTwo.setText(g.tTwo);
 
-        Log.d(TAG, "g.isFinal = " + g.isFinal);
         if (g.isFinal) {
             gC.vTOne.setTextColor(mContext.getResources().getColor(R.color.darkGray));
             gC.vTTwo.setTextColor(mContext.getResources().getColor(R.color.darkGray));
