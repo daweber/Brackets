@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.daweber.brackets.vo.Game;
 import com.daweber.brackets.R;
+import com.daweber.brackets.vo.Game;
 
 import java.util.List;
 
 /**
- * Created by moweber on 2/8/2016.
+ * ViewHolder for RecyclerView
  */
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameViewHolder> {
     private static final String TAG = "b64.GameListAdapter";

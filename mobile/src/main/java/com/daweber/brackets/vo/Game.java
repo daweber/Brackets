@@ -12,27 +12,29 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(databaseName = BracketsDatabase.NAME)
 public class Game extends BaseModel {
 
+    // Administrative Fields
     @Column
     @PrimaryKey(autoincrement = false)
     public int gID;
     @Column
+    public int bID;
+    @Column
+    public int bRound;
+    @Column
     public Boolean isFinal;
+
+    // Game Card Fields
     @Column
     public String tOne;
     @Column
-    public String tTwo;
-    @Column
     public int tOneScore;
+    @Column
+    public String tTwo;
     @Column
     public int tTwoScore;
     @Column
-    public String gSite;
-    @Column
-    public String gLocation;
-    @Column
-    public long gDate;
-    @Column
-    public String gTitle;
+    public String gDetails;
+
 
     public static final String TEAM_ONE_PREFIX = "Home State Team ";
     public static final String TEAM_TWO_PREFIX = "University of Team ";
