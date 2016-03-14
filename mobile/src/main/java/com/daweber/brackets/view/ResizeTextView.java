@@ -1,8 +1,10 @@
-package com.daweber.brackets;
+package com.daweber.brackets.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import com.daweber.brackets.util.ViewUtil;
 
 /*
 * Copyright (C) 2012 The Android Open Source Project

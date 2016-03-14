@@ -1,4 +1,4 @@
-package com.daweber.brackets;
+package com.daweber.brackets.util;
 
 import android.graphics.Paint;
 import android.util.TypedValue;

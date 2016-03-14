@@ -1,7 +1,18 @@
 package com.daweber.brackets;
 
+import android.app.Application;
+
+import com.raizlabs.android.dbflow.config.FlowManager;
+
 /**
- * Created by daweber.com [moweber] on 3/4/2016.
+ * Application Class
  */
-public class App {
+public class App extends Application {
+    private static final String TAG = "b64.Application";
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        FlowManager.init(this);
+    }
 }

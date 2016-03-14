@@ -3,6 +3,7 @@
     package="com.daweber.brackets">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +20,7 @@
         </activity>
         <activity
             android:name=".view.activity.SettingsActivity"
-            android:label="@string/title_activity_settings"/>
+            android:label="@string/title_activity_settings" />
     </application>
 
 </manifest>

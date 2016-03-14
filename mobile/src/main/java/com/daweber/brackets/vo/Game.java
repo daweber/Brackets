@@ -1,23 +1,40 @@
 package com.daweber.brackets.vo;
 
-import android.location.Address;
-
-import java.util.Date;
+import com.daweber.brackets.model.BracketsDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
- * Created by moweber on 2/8/2016.
+ * Game Class
  */
-public class Game {
+@Table(databaseName = BracketsDatabase.NAME)
+public class Game extends BaseModel {
+
+    @Column
+    @PrimaryKey(autoincrement = false)
+    public int gID;
+    @Column
     public Boolean isFinal;
+    @Column
     public String tOne;
+    @Column
     public String tTwo;
-    int tOneScore;
-    int tTwoScore;
-    String gSite;
-    Address gLocation;
-    Date gDate;
-    String gTitle;
+    @Column
+    public int tOneScore;
+    @Column
+    public int tTwoScore;
+    @Column
+    public String gSite;
+    @Column
+    public String gLocation;
+    @Column
+    public long gDate;
+    @Column
+    public String gTitle;
 
     public static final String TEAM_ONE_PREFIX = "Home State Team ";
     public static final String TEAM_TWO_PREFIX = "University of Team ";
+
 }

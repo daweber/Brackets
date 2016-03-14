@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/game"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="5dp"
     card_view:cardCornerRadius="4dp">
 
@@ -18,7 +18,7 @@
             android:layout_height="36dp"
             android:orientation="horizontal">
 
-            <com.daweber.brackets.ResizeTextView
+            <com.daweber.brackets.view.ResizeTextView
                 android:id="@+id/tOne"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
@@ -48,7 +48,7 @@
             android:layout_height="36dp"
             android:orientation="horizontal">
 
-            <com.daweber.brackets.ResizeTextView
+            <com.daweber.brackets.view.ResizeTextView
                 android:id="@+id/tTwo"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
@@ -70,7 +70,7 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <com.daweber.brackets.ResizeTextView
+        <com.daweber.brackets.view.ResizeTextView
             android:id="@+id/gDetails"
             android:layout_width="match_parent"
             android:layout_height="24dp"

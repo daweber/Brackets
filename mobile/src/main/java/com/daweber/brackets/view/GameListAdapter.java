@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.daweber.brackets.vo.Game;
 import com.daweber.brackets.R;
-import com.daweber.brackets.ResizeTextView;
 
 import java.util.List;
 

@@ -152,9 +152,11 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
         //TODO: This should go get the real gamesList from local database
         private List<Game> getRoundList(int round) {
+            Log.d(TAG, "getting round list...");
+
             List<Game> result = new ArrayList<>();
 
-            int size = 0;
+            int size;
 
             switch (round) {
                 case 1:
