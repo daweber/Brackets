@@ -5,9 +5,8 @@ import android.util.Log;
 
 import com.daweber.brackets.model.BracketsDatabase;
 import com.daweber.brackets.vo.Game;
-import com.daweber.brackets.vo.Game$Table;
 import com.raizlabs.android.dbflow.annotation.Migration;
-import com.raizlabs.android.dbflow.sql.language.Insert;
+import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.sql.migration.BaseMigration;
 
 /**
@@ -19,26 +18,23 @@ public class PopulateGamesData extends BaseMigration {
 
     @Override
     public void migrate(SQLiteDatabase database) {
-        Log.d(TAG, "Migrating Data...");
-        //populateGames();
+        Log.d(TAG, "Init Data...");
+        populateGames(database);
+        Log.d(TAG, "Data Initialized");
     }
 
-    public void populateGames() {
+    public void populateGames(SQLiteDatabase database) {
+        Game g = new Game();
+        g.setgID(1);
+        g.setbID(1);
+        g.setbRound(1);
+        g.setFinal(false);
+        g.settOne("University of Illinois");
+        g.settOneScore(78);
+        g.settTwo("Marquette University");
+        g.settTwoScore(81);
+        g.setgDetails("Bradley Center (Milwaukee, WI)");
 
-        Insert.into(Game.class).columns(
-                Game$Table.GID,
-                Game$Table.BID,
-                Game$Table.BROUND,
-                Game$Table.ISFINAL,
-                Game$Table.TONE,
-                Game$Table.TONESCORE,
-                Game$Table.TTWO,
-                Game$Table.TTWOSCORE,
-                Game$Table.GDETAILS)
-                .values(1, 1, 1, false,
-                        "University of Illinois", 78,
-                        "Marquette University", 81,
-                        "Bradley Center (Milwaukee, WI)").query();
-
+        TransactionManager.getInstance().saveOnSaveQueue(g);
     }
 }

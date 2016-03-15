@@ -39,4 +39,76 @@ public class Game extends BaseModel {
     public static final String TEAM_ONE_PREFIX = "Home State Team ";
     public static final String TEAM_TWO_PREFIX = "University of Team ";
 
+    public int getgID() {
+        return gID;
+    }
+
+    public void setgID(int gID) {
+        this.gID = gID;
+    }
+
+    public int getbID() {
+        return bID;
+    }
+
+    public void setbID(int bID) {
+        this.bID = bID;
+    }
+
+    public int getbRound() {
+        return bRound;
+    }
+
+    public void setbRound(int bRound) {
+        this.bRound = bRound;
+    }
+
+    public Boolean getFinal() {
+        return isFinal;
+    }
+
+    public void setFinal(Boolean aFinal) {
+        isFinal = aFinal;
+    }
+
+    public String gettOne() {
+        return tOne;
+    }
+
+    public void settOne(String tOne) {
+        this.tOne = tOne;
+    }
+
+    public int gettOneScore() {
+        return tOneScore;
+    }
+
+    public void settOneScore(int tOneScore) {
+        this.tOneScore = tOneScore;
+    }
+
+    public String gettTwo() {
+        return tTwo;
+    }
+
+    public void settTwo(String tTwo) {
+        this.tTwo = tTwo;
+    }
+
+    public int gettTwoScore() {
+        return tTwoScore;
+    }
+
+    public void settTwoScore(int tTwoScore) {
+        this.tTwoScore = tTwoScore;
+    }
+
+    public String getgDetails() {
+        return gDetails;
+    }
+
+    public void setgDetails(String gDetails) {
+        this.gDetails = gDetails;
+    }
+
 }

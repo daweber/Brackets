@@ -58,24 +58,6 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bracket);
 
-        // Testing DB Migration/Init
-//        Insert.into(Game.class).columns(
-//                Game$Table.GID,
-//                Game$Table.BID,
-//                Game$Table.BROUND,
-//                Game$Table.ISFINAL,
-//                Game$Table.TONE,
-//                Game$Table.TONESCORE,
-//                Game$Table.TTWO,
-//                Game$Table.TTWOSCORE,
-//                Game$Table.GDETAILS)
-//                .values(1, 1, 1, false,
-//                        "University of Illinois", 78,
-//                        "Marquette University", 81,
-//                        "Bradley Center (Milwaukee, WI)").query();
-//        Log.d(TAG, "Data says: " +
-//                new Select().from(Game.class).querySingle().tOne + " will win!");
-
         // Replace with real locked status of PickSet
         lockStatus = UNLOCKED;
 
@@ -179,24 +161,21 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
             switch (round) {
                 case 1:
-                    size = 4;
-                    break;
-                case 2:
                     size = 32;
                     break;
-                case 3:
+                case 2:
                     size = 16;
                     break;
-                case 4:
+                case 3:
                     size = 8;
                     break;
-                case 5:
+                case 4:
                     size = 4;
                     break;
-                case 6:
+                case 5:
                     size = 2;
                     break;
-                case 7:
+                case 6:
                     size = 1;
                     break;
                 default:
@@ -233,25 +212,23 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         public int getCount() {
-            return 7;
+            return 6;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "PLAY IN";
-                case 1:
                     return "ROUND OF 64";
-                case 2:
+                case 1:
                     return "ROUND OF 32";
-                case 3:
+                case 2:
                     return "ROUND OF 16";
-                case 4:
+                case 3:
                     return "ROUND OF 8";
-                case 5:
+                case 4:
                     return "ROUND OF 4";
-                case 6:
+                case 5:
                     return "CHAMPIONSHIP";
             }
             return null;
