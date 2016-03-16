@@ -9,7 +9,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 /**
  * Game Class
  */
-@Table(databaseName = BracketsDatabase.NAME)
+@Table(database = BracketsDatabase.class)
 public class Game extends BaseModel {
 
     // Administrative Fields
@@ -34,10 +34,6 @@ public class Game extends BaseModel {
     public int tTwoScore;
     @Column
     public String gDetails;
-
-
-    public static final String TEAM_ONE_PREFIX = "Home State Team ";
-    public static final String TEAM_TWO_PREFIX = "University of Team ";
 
     public int getgID() {
         return gID;

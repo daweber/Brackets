@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.daweber.brackets.R;
 import com.daweber.brackets.view.GameListAdapter;
 import com.daweber.brackets.vo.Game;
+import com.daweber.brackets.vo.Game_Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,42 +157,44 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
         //TODO: This should go get the real gamesList from local database
         private List<Game> getRoundList(int round) {
 
-            List<Game> result = new ArrayList<>();
-
-            int size;
+            int gameCount;
+            List<Game> gameList = new ArrayList<>();
 
             switch (round) {
                 case 1:
-                    size = 32;
+                    gameCount = 32;
                     break;
                 case 2:
-                    size = 16;
+                    gameCount = 16;
                     break;
                 case 3:
-                    size = 8;
+                    gameCount = 8;
                     break;
                 case 4:
-                    size = 4;
+                    gameCount = 4;
                     break;
                 case 5:
-                    size = 2;
+                    gameCount = 2;
                     break;
                 case 6:
-                    size = 1;
+                    gameCount = 1;
                     break;
                 default:
-                    size = 3;
+                    gameCount = 3;
                     break;
             }
 
-            for (int i = 1; i <= size; i++) {
-                Game g = new Game();
-                g.isFinal = (i % 2) == 0;
-                g.tOne = Game.TEAM_ONE_PREFIX + i;
-                g.tTwo = Game.TEAM_TWO_PREFIX + i;
-                result.add(g);
+            for (int i = 1; i <= gameCount; i++) {
+                Game g = SQLite
+                        .select()
+                        .from(Game.class)
+                        .where(Game_Table.gID.eq(1)).querySingle();
+                if (g != null) {
+                    gameList.add(g);
+                }
             }
-            return result;
+
+            return gameList;
         }
     }
 

@@ -9,7 +9,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 /**
  * Bracket Class
  */
-@Table(databaseName = BracketsDatabase.NAME)
+@Table(database = BracketsDatabase.class)
 public class Bracket extends BaseModel {
 
     @Column
