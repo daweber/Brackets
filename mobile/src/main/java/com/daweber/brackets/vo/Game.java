@@ -15,96 +15,106 @@ public class Game extends BaseModel {
     // Administrative Fields
     @Column
     @PrimaryKey(autoincrement = false)
-    public int gID;
+    public int gameId;
     @Column
-    public int bID;
+    public int bracketId;
     @Column
-    public int bRound;
+    public int bracketRound;
     @Column
-    public Boolean isFinal;
+    public int bracketRegion;
+    @Column
+    public Boolean isScoreFinal;
 
     // Game Card Fields
     @Column
-    public String tOne;
+    public String teamOne;
     @Column
-    public int tOneScore;
+    public int teamOneScore;
     @Column
-    public String tTwo;
+    public String teamTwo;
     @Column
-    public int tTwoScore;
+    public int teamTwoScore;
     @Column
-    public String gDetails;
+    public String gameDetails;
 
-    public int getgID() {
-        return gID;
+    public int getGameId() {
+        return gameId;
     }
 
-    public void setgID(int gID) {
-        this.gID = gID;
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 
-    public int getbID() {
-        return bID;
+    public int getBracketId() {
+        return bracketId;
     }
 
-    public void setbID(int bID) {
-        this.bID = bID;
+    public void setBracketId(int bracketId) {
+        this.bracketId = bracketId;
     }
 
-    public int getbRound() {
-        return bRound;
+    public int getBracketRound() {
+        return bracketRound;
     }
 
-    public void setbRound(int bRound) {
-        this.bRound = bRound;
+    public void setBracketRound(int bracketRound) {
+        this.bracketRound = bracketRound;
+    }
+
+    public int getBracketRegion() {
+        return bracketRegion;
+    }
+
+    public void setBracketRegion(int bracketRegion) {
+        this.bracketRegion = bracketRegion;
     }
 
     public Boolean getFinal() {
-        return isFinal;
+        return isScoreFinal;
     }
 
     public void setFinal(Boolean aFinal) {
-        isFinal = aFinal;
+        isScoreFinal = aFinal;
     }
 
-    public String gettOne() {
-        return tOne;
+    public String getTeamOne() {
+        return teamOne;
     }
 
-    public void settOne(String tOne) {
-        this.tOne = tOne;
+    public void setTeamOne(String teamOne) {
+        this.teamOne = teamOne;
     }
 
-    public int gettOneScore() {
-        return tOneScore;
+    public int getTeamOneScore() {
+        return teamOneScore;
     }
 
-    public void settOneScore(int tOneScore) {
-        this.tOneScore = tOneScore;
+    public void setTeamOneScore(int teamOneScore) {
+        this.teamOneScore = teamOneScore;
     }
 
-    public String gettTwo() {
-        return tTwo;
+    public String getTeamTwo() {
+        return teamTwo;
     }
 
-    public void settTwo(String tTwo) {
-        this.tTwo = tTwo;
+    public void setTeamTwo(String teamTwo) {
+        this.teamTwo = teamTwo;
     }
 
-    public int gettTwoScore() {
-        return tTwoScore;
+    public int getTeamTwoScore() {
+        return teamTwoScore;
     }
 
-    public void settTwoScore(int tTwoScore) {
-        this.tTwoScore = tTwoScore;
+    public void setTeamTwoScore(int teamTwoScore) {
+        this.teamTwoScore = teamTwoScore;
     }
 
-    public String getgDetails() {
-        return gDetails;
+    public String getGameDetails() {
+        return gameDetails;
     }
 
-    public void setgDetails(String gDetails) {
-        this.gDetails = gDetails;
+    public void setGameDetails(String gameDetails) {
+        this.gameDetails = gameDetails;
     }
 
 }

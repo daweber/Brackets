@@ -36,23 +36,23 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     @Override
     public void onBindViewHolder(GameViewHolder gC, int i) {
         Game g = gameList.get(i);
-        gC.vTOne.setText(g.tOne);
-        gC.vTTwo.setText(g.tTwo);
+        gC.vTOne.setText(g.teamOne);
+        gC.vTTwo.setText(g.teamTwo);
 
-        if (g.isFinal) {
+        if (g.isScoreFinal) {
             gC.vTOne.setTextColor(mContext.getResources().getColor(R.color.darkGray));
             gC.vTTwo.setTextColor(mContext.getResources().getColor(R.color.darkGray));
             gC.vSOne.setTextColor(mContext.getResources().getColor(R.color.darkGray));
             gC.vSTwo.setTextColor(mContext.getResources().getColor(R.color.darkGray));
-            gC.vGDetails.setBackgroundDrawable(new ColorDrawable(mContext.getResources()
+            gC.vGDets.setBackgroundDrawable(new ColorDrawable(mContext.getResources()
                     .getColor(R.color.mediumGray)));
         }
-        if (!g.isFinal) {
+        if (!g.isScoreFinal) {
             gC.vTOne.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
             gC.vTTwo.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
             gC.vSOne.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
             gC.vSTwo.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
-            gC.vGDetails.setBackgroundDrawable(new ColorDrawable(mContext.getResources()
+            gC.vGDets.setBackgroundDrawable(new ColorDrawable(mContext.getResources()
                     .getColor(R.color.colorPrimaryDark)));
         }
 
@@ -69,18 +69,18 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
     public static class GameViewHolder extends RecyclerView.ViewHolder {
 
-        protected ResizeTextView vTOne, vTTwo, vGDetails;
+        protected ResizeTextView vTOne, vTTwo, vGDets;
         protected TextView vSOne, vSTwo;
         protected LinearLayout gCard;
 
 
         public GameViewHolder(View v) {
             super(v);
-            vTOne = (ResizeTextView) v.findViewById(R.id.tOne);
-            vTTwo = (ResizeTextView) v.findViewById(R.id.tTwo);
-            vGDetails = (ResizeTextView) v.findViewById(R.id.gDetails);
-            vSOne = (TextView) v.findViewById(R.id.sOne);
-            vSTwo = (TextView) v.findViewById(R.id.sTwo);
+            vTOne = (ResizeTextView) v.findViewById(R.id.team_one);
+            vTTwo = (ResizeTextView) v.findViewById(R.id.team_two);
+            vGDets = (ResizeTextView) v.findViewById(R.id.game_details);
+            vSOne = (TextView) v.findViewById(R.id.team_one_score);
+            vSTwo = (TextView) v.findViewById(R.id.team_two_score);
         }
     }
 }

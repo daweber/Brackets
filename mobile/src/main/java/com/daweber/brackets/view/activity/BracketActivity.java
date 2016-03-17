@@ -28,7 +28,6 @@ import com.daweber.brackets.vo.Game;
 import com.daweber.brackets.vo.Game_Table;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BracketActivity extends AppCompatActivity implements View.OnClickListener {
@@ -148,54 +147,28 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             roundList.setLayoutManager(llm);
 
-            GameListAdapter ga = new GameListAdapter(container.getContext(), getRoundList(roundNumber));
+            List<Game> gameList = getRoundList(roundNumber);
+            Log.d(TAG, "gameList size: " + gameList.size());
+            GameListAdapter ga = new GameListAdapter(container.getContext(), gameList);
             roundList.setAdapter(ga);
 
             return rootView;
         }
 
-        //TODO: This should go get the real gamesList from local database
         private List<Game> getRoundList(int round) {
 
-            int gameCount;
-            List<Game> gameList = new ArrayList<>();
+//            for (int i = 0; i <= 63; i++) {
+//                Log.d(TAG, "Team 1: " + SQLite.select().from(Game.class)
+//                        .where(Game_Table.gameId.eq(i)).querySingle().getTeamOne());
+//            }
 
-            switch (round) {
-                case 1:
-                    gameCount = 32;
-                    break;
-                case 2:
-                    gameCount = 16;
-                    break;
-                case 3:
-                    gameCount = 8;
-                    break;
-                case 4:
-                    gameCount = 4;
-                    break;
-                case 5:
-                    gameCount = 2;
-                    break;
-                case 6:
-                    gameCount = 1;
-                    break;
-                default:
-                    gameCount = 3;
-                    break;
-            }
-
-            for (int i = 1; i <= gameCount; i++) {
-                Game g = SQLite
-                        .select()
-                        .from(Game.class)
-                        .where(Game_Table.gID.eq(1)).querySingle();
-                if (g != null) {
-                    gameList.add(g);
-                }
-            }
-
-            return gameList;
+            return SQLite
+                    .select()
+                    .from(Game.class)
+                    .where(Game_Table.bracketRound.eq(round))
+                    .and(Game_Table.bracketId.eq(1)).queryList();
         }
+
     }
 
     /**
