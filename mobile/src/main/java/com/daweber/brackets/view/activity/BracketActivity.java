@@ -1,7 +1,5 @@
 package com.daweber.brackets.view.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,26 +8,20 @@ import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.daweber.brackets.R;
-import com.daweber.brackets.view.GameListAdapter;
-import com.daweber.brackets.vo.Game;
-import com.daweber.brackets.vo.Game_Table;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.daweber.brackets.view.RoundPagerAdapter;
 
-import java.util.List;
-
+/**
+ * Bracket Activity Class
+ */
 public class BracketActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "b64.BracketActivity";
 
@@ -55,13 +47,15 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "OnCreating");
+        Log.d(TAG, "OnCreating...");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bracket);
 
         // Replace with real locked status of PickSet
         lockStatus = UNLOCKED;
 
+        //TODO: The whole toolbar "situation" needs to be reviewed
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null) {
             mActionBar.setElevation(0);
@@ -93,7 +87,7 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
             mFab.setOnClickListener(this);
         }
 
-        Log.d(TAG, "OnCreated");
+        //Log.d(TAG, "OnCreated");
     }
 
     @Override
@@ -108,107 +102,6 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.toolbarCreatePicksetFab:
                 Toast.makeText(this, "Create Pickset", Toast.LENGTH_SHORT).show();
                 break;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class RoundFragment extends Fragment {
-        private static final String TAG = "b64.RoundFragment";
-
-        private static final String ARG_ROUND_NUMBER = "round_number";
-        private int roundNumber;
-
-        public RoundFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static RoundFragment newInstance(int round) {
-            RoundFragment fragment = new RoundFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_ROUND_NUMBER, round);
-            fragment.roundNumber = round;
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-
-            RecyclerView roundList = (RecyclerView) rootView.findViewById(R.id.games_list);
-            roundList.setHasFixedSize(true);
-            LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
-            llm.setOrientation(LinearLayoutManager.VERTICAL);
-            roundList.setLayoutManager(llm);
-
-            List<Game> gameList = getRoundList(roundNumber);
-            Log.d(TAG, "gameList size: " + gameList.size());
-            GameListAdapter ga = new GameListAdapter(container.getContext(), gameList);
-            roundList.setAdapter(ga);
-
-            return rootView;
-        }
-
-        private List<Game> getRoundList(int round) {
-
-//            for (int i = 0; i <= 63; i++) {
-//                Log.d(TAG, "Team 1: " + SQLite.select().from(Game.class)
-//                        .where(Game_Table.gameId.eq(i)).querySingle().getTeamOne());
-//            }
-
-            return SQLite
-                    .select()
-                    .from(Game.class)
-                    .where(Game_Table.bracketRound.eq(round))
-                    .and(Game_Table.bracketId.eq(1)).queryList();
-        }
-
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class RoundPagerAdapter extends FragmentPagerAdapter {
-        private final static String TAG = "b64.RoundPagerAdapter";
-
-        public RoundPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return RoundFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            return 6;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "ROUND OF 64";
-                case 1:
-                    return "ROUND OF 32";
-                case 2:
-                    return "ROUND OF 16";
-                case 3:
-                    return "ROUND OF 8";
-                case 4:
-                    return "ROUND OF 4";
-                case 5:
-                    return "CHAMPIONSHIP";
-            }
-            return null;
         }
     }
 
@@ -242,6 +135,7 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void toggleActionBarLock(MenuItem item) {
+        //TODO: non-picked team grayed out when unlocked; plus, best pattern to enfore auto-lock?
         if (lockStatus) {
             item.setIcon(getResources().getDrawable(R.drawable.ic_unlocked_white));
             lockStatus = UNLOCKED;

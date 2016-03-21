@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="eastTint">#648E99</color>
+    <color name="southTint">#1FA8CC</color>
+    <color name="westTint">#48e957</color>
+    <color name="midwestTint">#40FFBD</color>
+
     <color name="colorPrimaryMuted">#A1A6BD</color>
     <color name="black_overlay">#66000000</color>
 

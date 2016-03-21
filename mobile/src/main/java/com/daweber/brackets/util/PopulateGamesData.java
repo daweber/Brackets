@@ -35,10 +35,10 @@ public class PopulateGamesData extends BaseMigration {
             "Winner of game: 55", "Winner of game: 57", "Winner of game: 59",
             "Winner of game: 61"};
     private String TEAMS_TWO[] = {"Austin Peay [16]", "Connecticut [9]",
-            "South Dakota St.[12]", "Hawaii [13]", "Wichita State [11]", "Buffalo [14]",
+            "South Dakota St. [12]", "Hawaii [13]", "Wichita State [11]", "Buffalo [14]",
             "Temple [10]", "UNC-Asheville [15]", "Holy Cross [16]", "Cincinnati [9]",
-            "Yale [12]", "UNC-Wilmington [13]", "Northern Iowa (UNI) [11]",
-            "Green Bay [14]", "Virgina Commonwealth [10]", "CSU Bakersfield [15]",
+            "Yale [12]", "UNC-Wilmington [13]", "Northern Iowa [11]",
+            "Green Bay [14]", "VCU [10]", "CSU Bakersfield [15]",
             "Florida Gulf Coast [16]", "Providence [9]", "Chattanooga [12]",
             "Stony Brook [13]", "Michigan [11]", "Steph. F. Austin [14]",
             "Pittsburgh [10]", "Weber State [15]", "Hampton [16]", "Butler [9]",
@@ -137,10 +137,8 @@ public class PopulateGamesData extends BaseMigration {
         else if (isBetween(gId, 25, 32) || isBetween(gId, 45, 48)
                 || isBetween(gId, 55, 56) || gId == 60)
             re = 4; // 4 = midwest
-        else if (isBetween(gId, 61, 63))
-            re = 5; // 5 = final four
         else
-            re = -1;
+            re = 0; // 5 = final four
 
         return re;
     }

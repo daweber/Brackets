@@ -12,6 +12,8 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(database = BracketsDatabase.class)
 public class Game extends BaseModel {
 
+    public static String REGION[] = {"finals", "south", "west", "east", "midwest"};
+
     // Administrative Fields
     @Column
     @PrimaryKey(autoincrement = false)

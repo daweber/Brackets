@@ -16,8 +16,10 @@ public class App extends Application {
     public void onCreate() {
         Log.d(TAG, "OnCreating");
         super.onCreate();
+
         FlowManager.init(this);
         FlowManager.getDatabase(BracketsDatabase.NAME).getWritableDatabase();
+
         Log.d(TAG, "OnCreated");
     }
 }
