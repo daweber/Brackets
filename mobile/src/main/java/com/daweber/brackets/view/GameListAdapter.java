@@ -39,6 +39,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
         gameCard.viewTeamTwo.setText(g.teamTwo);
         gameCard.viewGameDetails.setText(g.gameDetails);
         gameCard.viewBracketRegion.setText(Game.REGION[g.bracketRegion].toUpperCase());
+        gameCard.gID = g.getGameId();
     }
 
     @Override
