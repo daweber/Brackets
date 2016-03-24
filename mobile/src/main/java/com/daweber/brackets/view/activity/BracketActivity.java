@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.daweber.brackets.R;
 import com.daweber.brackets.view.RoundPagerAdapter;
+import com.daweber.brackets.vo.Pick;
+
+import java.util.UUID;
 
 /**
  * Bracket Activity Class
@@ -44,6 +47,10 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
     private Menu menu;
     private Boolean lockStatus;
+
+    //TODO: convert to SharedPref.
+    private int psID = 1;
+    private int bId = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,5 +150,14 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
             item.setIcon(getResources().getDrawable(R.drawable.ic_locked_red));
             lockStatus = LOCKED;
         }
+    }
+
+    public static void setPicked(int game, int pick) {
+        //TODO: set picked team
+        Log.d(TAG, "Set game " + game + " winner to number " + pick);
+    }
+
+    public static void createPickset(int bracket) {
+        //TODO: create set of picks for given bracket
     }
 }

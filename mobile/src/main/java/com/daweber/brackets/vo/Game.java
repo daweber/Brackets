@@ -7,7 +7,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
- * Game Class
+ * Game Table class
  */
 @Table(database = BracketsDatabase.class)
 public class Game extends BaseModel {

@@ -7,7 +7,7 @@ import com.daweber.brackets.model.BracketsDatabase;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 /**
- * Application Class
+ * Application class
  */
 public class App extends Application {
     private static final String TAG = "b64.Application";

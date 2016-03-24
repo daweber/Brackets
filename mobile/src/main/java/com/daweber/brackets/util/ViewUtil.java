@@ -3,6 +3,7 @@ package com.daweber.brackets.util;
 import android.graphics.Paint;
 import android.util.TypedValue;
 import android.widget.TextView;
+// TODO: needs citation, check SO
 
 /*
 * Copyright (C) 2012 The Android Open Source Project

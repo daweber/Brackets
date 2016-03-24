@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.daweber.brackets.util.ViewUtil;
+// TODO: needs citation, check SO in conjuction with ViewUtil.resizeText()
 
 /*
 * Copyright (C) 2012 The Android Open Source Project

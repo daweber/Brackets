@@ -7,14 +7,14 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 /**
- * Bracket Table class
+ * Pickset Table class
  */
 @Table(database = BracketsDatabase.class)
-public class Bracket extends BaseModel {
+public class Pickset extends BaseModel {
 
     @Column
     @PrimaryKey(autoincrement = false)
-    public int bracketId;
+    public int picksetId;
     @Column
-    public String bracketName;
+    public String pickedName;
 }

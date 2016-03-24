@@ -1,14 +1,13 @@
 package com.daweber.brackets.view;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.daweber.brackets.R;
 
 /**
- * Game ViewHolder class
+ * Game View Holder class
  */
 public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private static final String TAG = "b64.GameViewHolder";
@@ -16,29 +15,41 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected ResizeTextView viewTeamOne, viewTeamTwo, viewGameDetails;
     protected TextView viewBracketRegion;
 
+    public GameCardClickListener mListener;
+
     protected int gID;
 
-    public GameViewHolder(View v) {
+    public GameViewHolder(View v, GameCardClickListener listener) {
         super(v);
+
+        mListener = listener;
+
         viewTeamOne = (ResizeTextView) v.findViewById(R.id.team_one);
         viewTeamOne.setOnClickListener(this);
+
         viewTeamTwo = (ResizeTextView) v.findViewById(R.id.team_two);
         viewTeamTwo.setOnClickListener(this);
+
         viewGameDetails = (ResizeTextView) v.findViewById(R.id.game_details);
+        viewGameDetails.setOnClickListener(this);
+
         viewBracketRegion = (TextView) v.findViewById(R.id.bracket_region);
+        viewBracketRegion.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.team_one || id == R.id.team_two)
+            mListener.setPicked((ResizeTextView) v, gID);
+        else
+            mListener.moreInfo(v, gID);
+    }
 
-        switch (v.getId()) {
-            case R.id.team_one:
-                //TODO: update/create pick record, update game record.
-                Log.d(TAG, viewTeamOne.getText() + " Picked in game: " + gID);
-                break;
-            case R.id.team_two:
-                Log.d(TAG, viewTeamTwo.getText() + " Picked in game: " + gID);
-                break;
-        }
+    public interface GameCardClickListener {
+
+        void setPicked(ResizeTextView picked, int game);
+
+        void moreInfo(View touched, int game);
     }
 }

@@ -3,7 +3,7 @@ package com.daweber.brackets.model;
 import com.raizlabs.android.dbflow.annotation.Database;
 
 /**
- * DBFlow Database
+ * DBFlow Database class
  */
 @Database(name = BracketsDatabase.NAME, version = BracketsDatabase.VERSION)
 public class BracketsDatabase {

@@ -1,15 +1,14 @@
 package com.daweber.brackets.view;
 
-/**
- * Round Pager Adapter class
- */
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import com.daweber.brackets.view.fragment.RoundFragment;
 
+/**
+ * Round Pager Adapter class
+ */
 public class RoundPagerAdapter extends FragmentPagerAdapter {
     private final static String TAG = "b64.RoundPagerAdapter";
 

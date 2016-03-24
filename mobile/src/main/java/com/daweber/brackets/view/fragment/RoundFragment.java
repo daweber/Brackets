@@ -26,6 +26,8 @@ public class RoundFragment extends Fragment {
     private static final String ARG_ROUND_NUMBER = "round_number";
 
     private int roundNumber;
+    private GameListAdapter roundListAdapter;
+    private RecyclerView roundList;
 
     public RoundFragment() {
     }
@@ -45,18 +47,26 @@ public class RoundFragment extends Fragment {
         Log.d(TAG, "OnCreating...");
         //TODO:deal with bundle
 
-        View rootView = inflater.inflate(R.layout.fragment_round_list, container, false);
-        LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-
-        RecyclerView roundList = (RecyclerView) rootView
+        final View rootView = inflater
+                .inflate(R.layout.fragment_round_list, container, false);
+        roundList = (RecyclerView) rootView
                 .findViewById(R.id.round_games_list);
-        roundList.setHasFixedSize(true);
-        roundList.setLayoutManager(llm);
-        roundList.setAdapter(new GameListAdapter(container.getContext(),
-                getRoundGameList(roundNumber)));
+        roundListAdapter = new GameListAdapter(container.getContext(),
+                getRoundGameList(roundNumber));
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        roundList.setLayoutManager(llm);
+        roundList.setHasFixedSize(true);
+        roundList.setAdapter(roundListAdapter);
     }
 
     private List<Game> getRoundGameList(int round) {
