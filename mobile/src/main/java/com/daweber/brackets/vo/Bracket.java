@@ -12,9 +12,24 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(database = BracketsDatabase.class)
 public class Bracket extends BaseModel {
 
+    @PrimaryKey(autoincrement = true)
+    private int bracketId;
     @Column
-    @PrimaryKey(autoincrement = false)
-    public int bracketId;
-    @Column
-    public String bracketName;
+    private String bracketName;
+
+    public String getBracketName() {
+        return bracketName;
+    }
+
+    public void setBracketName(String bracketName) {
+        this.bracketName = bracketName;
+    }
+
+    public int getBracketId() {
+        return bracketId;
+    }
+
+    public void setBracketId(int bracketId) {
+        this.bracketId = bracketId;
+    }
 }

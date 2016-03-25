@@ -9,35 +9,32 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 /**
  * Game Table class
  */
-@Table(database = BracketsDatabase.class)
+@Table(database = BracketsDatabase.class, useIsForPrivateBooleans = true)
 public class Game extends BaseModel {
 
     public static String REGION[] = {"finals", "south", "west", "east", "midwest"};
 
-    // Administrative Fields
+    @PrimaryKey(autoincrement = true)
+    private int gameId;
     @Column
-    @PrimaryKey(autoincrement = false)
-    public int gameId;
+    private int bracketId;
     @Column
-    public int bracketId;
+    private int bracketRound;
     @Column
-    public int bracketRound;
+    private int bracketRegion;
     @Column
-    public int bracketRegion;
-    @Column
-    public Boolean isScoreFinal;
+    private boolean gameOver;
 
-    // Game Card Fields
     @Column
-    public String teamOne;
+    private String teamOne;
     @Column
-    public int teamOneScore;
+    private int teamOneScore;
     @Column
-    public String teamTwo;
+    private String teamTwo;
     @Column
-    public int teamTwoScore;
+    private int teamTwoScore;
     @Column
-    public String gameDetails;
+    private String gameDetails;
 
     public int getGameId() {
         return gameId;
@@ -71,12 +68,12 @@ public class Game extends BaseModel {
         this.bracketRegion = bracketRegion;
     }
 
-    public Boolean getFinal() {
-        return isScoreFinal;
+    public boolean isGameOver() {
+        return gameOver;
     }
 
-    public void setFinal(Boolean aFinal) {
-        isScoreFinal = aFinal;
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 
     public String getTeamOne() {

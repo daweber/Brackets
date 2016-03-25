@@ -17,10 +17,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.daweber.brackets.R;
+import com.daweber.brackets.view.PromptDialog;
 import com.daweber.brackets.view.RoundPagerAdapter;
-import com.daweber.brackets.vo.Pick;
-
-import java.util.UUID;
 
 /**
  * Bracket Activity Class
@@ -48,9 +46,8 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
     private Menu menu;
     private Boolean lockStatus;
 
-    //TODO: convert to SharedPref.
-    private int psID = 1;
-    private int bId = 1;
+    //TODO: Add defaults SharePrefs/Settings
+    private int mPickset, mBracket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +91,7 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
             mFab.setOnClickListener(this);
         }
 
+        //TODO: on first run, prompt for Pickset Name, init pick records with pickedWinner = 0
         //Log.d(TAG, "OnCreated");
     }
 
@@ -107,6 +105,14 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(this, "Select Bracket", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.toolbarCreatePicksetFab:
+                PromptDialog dlg = new PromptDialog(this, R.string.title, R.string.enter_comment) {
+                    @Override
+                    public boolean onOkClicked(String input) {
+                        createPickset(1, input);
+                        return true; // true = close dialog
+                    }
+                };
+                dlg.show();
                 Toast.makeText(this, "Create Pickset", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -157,7 +163,9 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
         Log.d(TAG, "Set game " + game + " winner to number " + pick);
     }
 
-    public static void createPickset(int bracket) {
+    public static void createPickset(int bracket, String name) {
+
+
         //TODO: create set of picks for given bracket
     }
 }

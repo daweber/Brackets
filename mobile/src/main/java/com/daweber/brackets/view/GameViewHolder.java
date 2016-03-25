@@ -2,6 +2,7 @@ package com.daweber.brackets.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daweber.brackets.R;
@@ -14,6 +15,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     protected ResizeTextView viewTeamOne, viewTeamTwo, viewGameDetails;
     protected TextView viewBracketRegion;
+    protected ImageView pickTeamOne, pickTeamTwo;
 
     public GameCardClickListener mListener;
 
@@ -25,15 +27,21 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         mListener = listener;
 
         viewTeamOne = (ResizeTextView) v.findViewById(R.id.team_one);
-        viewTeamOne.setOnClickListener(this);
+        pickTeamOne = (ImageView) v.findViewById(R.id.team_one_pick);
 
         viewTeamTwo = (ResizeTextView) v.findViewById(R.id.team_two);
-        viewTeamTwo.setOnClickListener(this);
+        pickTeamTwo = (ImageView) v.findViewById(R.id.team_two_pick);
 
         viewGameDetails = (ResizeTextView) v.findViewById(R.id.game_details);
-        viewGameDetails.setOnClickListener(this);
-
         viewBracketRegion = (TextView) v.findViewById(R.id.bracket_region);
+
+        viewTeamOne.setOnClickListener(this);
+        viewTeamTwo.setOnClickListener(this);
+
+        pickTeamOne.setOnClickListener(this);
+        pickTeamTwo.setOnClickListener(this);
+
+        viewGameDetails.setOnClickListener(this);
         viewBracketRegion.setOnClickListener(this);
     }
 

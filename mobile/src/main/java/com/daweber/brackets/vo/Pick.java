@@ -12,30 +12,30 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(database = BracketsDatabase.class)
 public class Pick extends BaseModel {
 
-    @Column
-    @PrimaryKey(autoincrement = false)
-    public int pickId;
-    @Column
-    public int bracketId;
-    @Column
-    public int gameId;
-    @Column
-    public int pickedWinner;
 
-    public int getBracketId() {
-        return bracketId;
+    @PrimaryKey(autoincrement = true)
+    private int pickId;
+    @Column
+    private int picksetId;
+    @Column
+    private int gameId;
+    @Column
+    private int pickedWinner;
+
+    public int getPickId() {
+        return pickId;
     }
 
-    public void setBracketId(int bracketId) {
-        this.bracketId = bracketId;
+    public void setPickId(int pickId) {
+        this.pickId = pickId;
     }
 
-    public int getPickedWinner() {
-        return pickedWinner;
+    public int getPicksetId() {
+        return picksetId;
     }
 
-    public void setPickedWinner(int pickedWinner) {
-        this.pickedWinner = pickedWinner;
+    public void setPicksetId(int picksetId) {
+        this.picksetId = picksetId;
     }
 
     public int getGameId() {
@@ -46,11 +46,11 @@ public class Pick extends BaseModel {
         this.gameId = gameId;
     }
 
-    public int getPickId() {
-        return pickId;
+    public int getPickedWinner() {
+        return pickedWinner;
     }
 
-    public void setPickId(int pickId) {
-        this.pickId = pickId;
+    public void setPickedWinner(int pickedWinner) {
+        this.pickedWinner = pickedWinner;
     }
 }

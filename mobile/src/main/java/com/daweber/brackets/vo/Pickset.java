@@ -12,9 +12,35 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(database = BracketsDatabase.class)
 public class Pickset extends BaseModel {
 
+    @PrimaryKey(autoincrement = true)
+    private int picksetId;
     @Column
-    @PrimaryKey(autoincrement = false)
-    public int picksetId;
+    private int bracketId;
     @Column
-    public String pickedName;
+    private String picksetName;
+
+    public int getPicksetId() {
+        return picksetId;
+    }
+
+    public void setPicksetId(int picksetId) {
+        this.picksetId = picksetId;
+    }
+
+    public int getBracketId() {
+        return bracketId;
+    }
+
+    public void setBracketId(int bracketId) {
+        this.bracketId = bracketId;
+    }
+
+    public String getPicksetName() {
+        return picksetName;
+    }
+
+    public void setPicksetName(String picksetName) {
+        this.picksetName = picksetName;
+    }
+
 }

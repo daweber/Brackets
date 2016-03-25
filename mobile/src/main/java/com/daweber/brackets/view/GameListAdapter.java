@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.daweber.brackets.R;
 import com.daweber.brackets.view.activity.BracketActivity;
 import com.daweber.brackets.vo.Game;
+import com.daweber.brackets.vo.Pick;
+import com.daweber.brackets.vo.Pick_Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
 
@@ -37,8 +40,8 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
 
         Game g = gameList.get(i);
         int gameId = g.getGameId();
-        String teamOne = g.teamOne;
-        String teamTwo = g.teamTwo;
+        String teamOne = g.getTeamOne();
+        String teamTwo = g.getTeamTwo();
 
         //TODO:use a flag, isPicked
         if (teamOne.length() <= 2)
@@ -55,9 +58,23 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
         else
             gameCard.viewTeamTwo.setText(teamTwo);
 
-        gameCard.viewGameDetails.setText(g.gameDetails);
-        gameCard.viewBracketRegion.setText(Game.REGION[g.bracketRegion].toUpperCase());
+        gameCard.viewGameDetails.setText(g.getGameDetails());
+        gameCard.viewBracketRegion.setText(Game.REGION[g.getBracketRegion()].toUpperCase());
         gameCard.gID = gameId;
+
+//        Pick gamePick = SQLite
+//                .select(Pick_Table.pickedWinner)
+//                .from(Pick.class)
+//                .where(Pick_Table.bracketId.eq(1))
+//                .and(Pick_Table.gameId.eq(gameId)).querySingle();
+
+//        if (gamePick != null) {
+//            int pickedTeam = gamePick.getPickedWinner();
+//            if (pickedTeam == 1)
+//                gameCard.pickTeamOne.setVisibility(View.VISIBLE);
+//            if (pickedTeam == 2)
+//                gameCard.pickTeamTwo.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Override

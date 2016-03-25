@@ -66,4 +66,8 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="content_desc_pick_icon">Pick Icon</string>
     <string name="unpicked_team_prefix">Winner of game</string>
+    <string name="ok">OK</string>
+    <string name="cancel">CANCEL</string>
+    <string name="title">Create a New Pickset</string>
+    <string name="enter_comment">Enter name:</string>
 </resources>

@@ -107,7 +107,7 @@ public class PopulateGamesData extends BaseMigration {
             g.setBracketId(1);
             g.setBracketRound(getRound(i));
             g.setBracketRegion(getRegion(i));
-            g.setFinal(false);
+            g.setGameOver(false);
             g.setTeamOne(TEAMS_ONE[(i - 1)]);
             g.setTeamOneScore(0);
             g.setTeamTwo(TEAMS_TWO[(i - 1)]);
