@@ -24,13 +24,10 @@ import com.daweber.brackets.view.RoundPagerAdapter;
 import com.daweber.brackets.vo.Bracket;
 import com.daweber.brackets.vo.Bracket_Table;
 import com.daweber.brackets.vo.Pick;
-import com.daweber.brackets.vo.Pick_Table;
 import com.daweber.brackets.vo.Pickset;
 import com.daweber.brackets.vo.Pickset_Table;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
-
-import java.util.List;
 
 /**
  * Bracket Activity Class
@@ -113,11 +110,10 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
         Button pickPicksetButton = (Button) findViewById(R.id.toolbarPicksButton);
         if (pickPicksetButton != null) {
-            Log.d(TAG, "pickPicksetButton != null");
             if (ps != null)
                 pickPicksetButton.setText(ps.getPicksetName());
             else
-                pickBracketButton.setText("DNE");
+                pickPicksetButton.setText("DNE");
             pickPicksetButton.setOnClickListener(this);
         }
 
@@ -202,25 +198,15 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public static void setPicked(int game, int pick, int pickset) {
-        Log.d(TAG, "setPicked([Game]" + game + ",[pick]" + pick + ",[pickset]" + pickset);
+    public static void updatePicked(int pick, int pickset, int game, int winner) {
+        Pick p = new Pick();
+        p.setPickId(pick);
+        p.setPicksetId(pickset);
+        p.setGameId(game);
+        p.setPickedWinner(winner);
+        p.save();
 
-        List<Pick> records = SQLite.select()
-                .from(Pick.class)
-                .where(Pick_Table.picksetId.eq(pickset)).queryList();
-        Log.d(TAG, "records" + records.get(1));
-        Pick p;
-        for (int i = 0; i < records.size(); i++) {
-            p = records.get(i);
-            Log.d(TAG, "Pick: " + p.getPickId() +
-                    " | Game: " + p.getGameId() +
-                    " | Pickset: " + p.getPicksetId() +
-                    " | Winner: " + p.getPickedWinner());
-        }
-//        if (record == null)
-//            Log.d(TAG, "No pick exists for " + game + " in pickset " + pickset);
-//        else
-//            Log.d(TAG, "Pick created with pickID " + record.getPickId());
+        Log.d(TAG, "Pick " + pick + " | Game " + game + " | Pickset " + pickset + " set to " + winner);
     }
 
     public static void createPickset(int bracket, String name) {

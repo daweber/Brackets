@@ -127,7 +127,7 @@ public class DatabaseInit extends BaseMigration {
         // Just one default Bracket for now, TODO: add more default Brackets
         Bracket b = new Bracket();
         b.setBracketId(1);
-        b.setBracketName("NCAA Dance [2016]");
+        b.setBracketName("NCAA [2016]");
         TransactionManager.getInstance().saveOnSaveQueue(b);
     }
 
@@ -149,6 +149,7 @@ public class DatabaseInit extends BaseMigration {
             p.setPicksetId(1);
             p.setGameId(i);
             p.setPickedWinner(0);
+            TransactionManager.getInstance().saveOnSaveQueue(p);
         }
     }
 

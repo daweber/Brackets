@@ -19,7 +19,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     public GameCardClickListener mListener;
 
-    protected int gID;
+    protected int gameID;
     protected int pickID;
     protected int picksetID;
 
@@ -51,14 +51,14 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.team_one || id == R.id.team_two)
-            mListener.setPicked((ResizeTextView) v, gID, picksetID);
+            mListener.setPicked((ResizeTextView) v, gameID, picksetID, pickID);
         else
-            mListener.moreInfo(v, gID);
+            mListener.moreInfo(v, gameID);
     }
 
     public interface GameCardClickListener {
 
-        void setPicked(ResizeTextView picked, int game, int pick);
+        void setPicked(ResizeTextView picked, int game, int pickset, int pick);
 
         void moreInfo(View touched, int game);
     }

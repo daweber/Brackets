@@ -13,7 +13,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Pick extends BaseModel {
 
 
-    @PrimaryKey(autoincrement = true)
+    @PrimaryKey(autoincrement = false)
     private int pickId;
     @Column
     private int picksetId;

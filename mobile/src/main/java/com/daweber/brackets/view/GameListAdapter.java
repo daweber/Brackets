@@ -62,7 +62,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
 
         gameCard.viewGameDetails.setText(g.getGameDetails());
         gameCard.viewBracketRegion.setText(Game.REGION[g.getBracketRegion()].toUpperCase());
-        gameCard.gID = gameId;
+        gameCard.gameID = gameId;
 
         Pick gamePick = SQLite.select()
                 .from(Pick.class)
@@ -70,16 +70,33 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
                 .and(Pick_Table.gameId.eq(gameId)).querySingle();
 
         if (gamePick != null) {
+
             gameCard.pickID = gamePick.getPickId();
+
             int pickedTeam = gamePick.getPickedWinner();
-            if (pickedTeam == 1)
-                gameCard.pickTeamOne.setVisibility(View.VISIBLE);
-            if (pickedTeam == 2)
-                gameCard.pickTeamTwo.setVisibility(View.VISIBLE);
+
+            switch (pickedTeam) {
+                case 1:
+                    gameCard.pickTeamOne.setVisibility(View.VISIBLE);
+                    gameCard.pickTeamTwo.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    gameCard.pickTeamOne.setVisibility(View.GONE);
+                    gameCard.pickTeamTwo.setVisibility(View.VISIBLE);
+                    break;
+                case 0:
+                    gameCard.pickTeamOne.setVisibility(View.GONE);
+                    gameCard.pickTeamTwo.setVisibility(View.GONE);
+                    break;
+            }
+        } else {
+            gameCard.pickTeamOne.setVisibility(View.GONE);
+            gameCard.pickTeamTwo.setVisibility(View.GONE);
         }
+        
         gameCard.picksetID = mPickset;
-        Log.d(TAG, "pickset = " + mPickset);
     }
+
 
     @Override
     public GameViewHolder onCreateViewHolder(ViewGroup parent, int i) {
@@ -89,12 +106,12 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
 
         return new GameViewHolder(gameCard, new GameViewHolder.GameCardClickListener() {
             @Override
-            public void setPicked(ResizeTextView picked, int game, int pickset) {
+            public void setPicked(ResizeTextView picked, int game, int pickset, int pick) {
                 if (picked.getId() == R.id.team_one) {
-                    BracketActivity.setPicked(game, 1, pickset);
+                    BracketActivity.updatePicked(pick, pickset, game, 1);
                     notifyDataSetChanged();
                 } else {
-                    BracketActivity.setPicked(game, 2, pickset);
+                    BracketActivity.updatePicked(pick, pickset, game, 2);
                     notifyDataSetChanged();
                 }
             }
