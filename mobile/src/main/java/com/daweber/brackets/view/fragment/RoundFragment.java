@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.daweber.brackets.R;
 import com.daweber.brackets.view.GameListAdapter;
+import com.daweber.brackets.view.activity.BracketActivity;
 import com.daweber.brackets.vo.Game;
 import com.daweber.brackets.vo.Game_Table;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -26,6 +27,8 @@ public class RoundFragment extends Fragment {
     private static final String ARG_ROUND_NUMBER = "round_number";
 
     private int roundNumber;
+    private BracketActivity mActivity;
+
     private GameListAdapter roundListAdapter;
     private RecyclerView roundList;
 
@@ -47,12 +50,14 @@ public class RoundFragment extends Fragment {
         Log.d(TAG, "OnCreating...");
         //TODO:deal with bundle
 
+        mActivity = (BracketActivity) getActivity();
+
         final View rootView = inflater
                 .inflate(R.layout.fragment_round_list, container, false);
         roundList = (RecyclerView) rootView
                 .findViewById(R.id.round_games_list);
         roundListAdapter = new GameListAdapter(container.getContext(),
-                getRoundGameList(roundNumber));
+                getRoundGameList(roundNumber), mActivity.getcPickset());
 
         return rootView;
     }
@@ -74,9 +79,10 @@ public class RoundFragment extends Fragment {
                 .select()
                 .from(Game.class)
                 .where(Game_Table.bracketRound.eq(round))
-                .and(Game_Table.bracketId.eq(1)).queryList();
-
-        //TODO:hard-coded '1' above should reflect shardPrefs value and/or Activity Member
+                .and(Game_Table.bracketId.eq(mActivity.getcBracket())).queryList();
     }
 
+    public int getRoundNumber() {
+        return roundNumber;
+    }
 }

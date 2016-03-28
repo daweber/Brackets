@@ -3,7 +3,10 @@ package com.daweber.brackets.util;
 import android.util.Log;
 
 import com.daweber.brackets.model.BracketsDatabase;
+import com.daweber.brackets.vo.Bracket;
 import com.daweber.brackets.vo.Game;
+import com.daweber.brackets.vo.Pick;
+import com.daweber.brackets.vo.Pickset;
 import com.raizlabs.android.dbflow.annotation.Migration;
 import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.sql.migration.BaseMigration;
@@ -13,7 +16,7 @@ import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
  * Migration Class
  */
 @Migration(version = 0, database = BracketsDatabase.class)
-public class PopulateGamesData extends BaseMigration {
+public class DatabaseInit extends BaseMigration {
     private static final String TAG = "b64.BracketsData";
     private String TEAMS_ONE[] = {"Kansas [1]", "Colorado [8]", "Maryland [5]",
             "California [4]", "Arizona [6]", "Miami (Fla.) [3]", "Iowa [7]",
@@ -96,7 +99,10 @@ public class PopulateGamesData extends BaseMigration {
     @Override
     public void migrate(DatabaseWrapper database) {
         Log.d(TAG, "Init Data...");
+        populateBrackets();
         populateGames();
+        populatePicksets();
+        populatePicks();
         Log.d(TAG, "Data Initialized");
     }
 
@@ -114,6 +120,35 @@ public class PopulateGamesData extends BaseMigration {
             g.setTeamTwoScore(0);
             g.setGameDetails(GAMES_DETAIL[(i - 1)]);
             TransactionManager.getInstance().saveOnSaveQueue(g);
+        }
+    }
+
+    public void populateBrackets() {
+        // Just one default Bracket for now, TODO: add more default Brackets
+        Bracket b = new Bracket();
+        b.setBracketId(1);
+        b.setBracketName("NCAA Dance [2016]");
+        TransactionManager.getInstance().saveOnSaveQueue(b);
+    }
+
+    public void populatePicksets() {
+        // Just one default Pickset for now, TODO: add more default Picksets
+        Pickset ps = new Pickset();
+        ps.setPicksetId(1);
+        ps.setBracketId(1);
+        ps.setPicksetName("My Picks");
+        ps.setLocked(false);
+        TransactionManager.getInstance().saveOnSaveQueue(ps);
+    }
+
+    public void populatePicks() {
+        // Init picks for default Pickset
+        for (int i = 1; i <= 63; i++) {
+            Pick p = new Pick();
+            p.setPickId(i + 99);
+            p.setPicksetId(1);
+            p.setGameId(i);
+            p.setPickedWinner(0);
         }
     }
 

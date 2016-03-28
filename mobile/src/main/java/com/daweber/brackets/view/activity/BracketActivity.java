@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -16,9 +17,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.daweber.brackets.App;
 import com.daweber.brackets.R;
 import com.daweber.brackets.view.PromptDialog;
 import com.daweber.brackets.view.RoundPagerAdapter;
+import com.daweber.brackets.vo.Bracket;
+import com.daweber.brackets.vo.Bracket_Table;
+import com.daweber.brackets.vo.Pick;
+import com.daweber.brackets.vo.Pick_Table;
+import com.daweber.brackets.vo.Pickset;
+import com.daweber.brackets.vo.Pickset_Table;
+import com.raizlabs.android.dbflow.runtime.TransactionManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+
+import java.util.List;
 
 /**
  * Bracket Activity Class
@@ -46,27 +58,38 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
     private Menu menu;
     private Boolean lockStatus;
 
-    //TODO: Add defaults SharePrefs/Settings
-    private int mPickset, mBracket;
+    private int cPickset, cBracket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Log.d(TAG, "OnCreating...");
 
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bracket);
 
-        // Replace with real locked status of PickSet
-        lockStatus = UNLOCKED;
+        App mApp = (App) getApplication();
 
-        //TODO: The whole toolbar "situation" needs to be reviewed
+        cPickset = mApp.getDefaultPickset();
+
+        cBracket = mApp.getDefaultBracket();
+
+        Pickset ps = SQLite
+                .select().from(Pickset.class)
+                .where(Pickset_Table.picksetId.eq(cPickset))
+                .querySingle();
+
+        if (ps != null)
+            lockStatus = ps.isLocked();
+        else
+            lockStatus = UNLOCKED;
+
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null) {
             mActionBar.setElevation(0);
             mActionBar.setLogo(R.mipmap.ic_launcher);
             mActionBar.setDisplayUseLogoEnabled(true);
             mActionBar.setDisplayShowHomeEnabled(true);
-        }
+        }//TODO: The whole toolbar "situation" needs to be reviewed, Add Base Activity
 
         mRoundPagerAdapter = new RoundPagerAdapter(getFragmentManager());
         roundPager = (ViewPager) findViewById(R.id.container);
@@ -78,12 +101,24 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
 
         Button pickBracketButton = (Button) findViewById(R.id.toolbarBracketButton);
         if (pickBracketButton != null) {
+            Bracket b = SQLite.select()
+                    .from(Bracket.class)
+                    .where(Bracket_Table.bracketId.eq(cBracket)).querySingle();
+            if (b != null)
+                pickBracketButton.setText(b.getBracketName());
+            else
+                pickBracketButton.setText("DNE");
             pickBracketButton.setOnClickListener(this);
         }
 
-        Button pickPicksButtons = (Button) findViewById(R.id.toolbarPicksButton);
-        if (pickPicksButtons != null) {
-            pickPicksButtons.setOnClickListener(this);
+        Button pickPicksetButton = (Button) findViewById(R.id.toolbarPicksButton);
+        if (pickPicksetButton != null) {
+            Log.d(TAG, "pickPicksetButton != null");
+            if (ps != null)
+                pickPicksetButton.setText(ps.getPicksetName());
+            else
+                pickBracketButton.setText("DNE");
+            pickPicksetButton.setOnClickListener(this);
         }
 
         FloatingActionButton mFab = (FloatingActionButton) findViewById(R.id.toolbarCreatePicksetFab);
@@ -91,8 +126,7 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
             mFab.setOnClickListener(this);
         }
 
-        //TODO: on first run, prompt for Pickset Name, init pick records with pickedWinner = 0
-        //Log.d(TAG, "OnCreated");
+        Log.d(TAG, "OnCreated");
     }
 
     @Override
@@ -137,7 +171,8 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_share:
-                Toast.makeText(this, "share Bracket coming soon", Toast.LENGTH_SHORT).show();
+                putDataTest();
+                //Toast.makeText(this, "share Bracket coming soon", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_lock_toggle:
                 toggleActionBarLock(item);
@@ -147,25 +182,64 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
+    private void putDataTest() {
+        Pick p = new Pick();
+        p.setPicksetId(1);
+        p.setGameId(0);
+        p.setPickedWinner(0);
+        TransactionManager.getInstance().saveOnSaveQueue(p);
+
+    }
+
     private void toggleActionBarLock(MenuItem item) {
-        //TODO: non-picked team grayed out when unlocked; plus, best pattern to enfore auto-lock?
+        //TODO: non-picked team grayed out when unlocked.
         if (lockStatus) {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_unlocked_white));
+            item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_unlocked_white));
             lockStatus = UNLOCKED;
         } else {
-            item.setIcon(getResources().getDrawable(R.drawable.ic_locked_red));
+            item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_locked_red));
             lockStatus = LOCKED;
         }
     }
 
-    public static void setPicked(int game, int pick) {
-        //TODO: set picked team
-        Log.d(TAG, "Set game " + game + " winner to number " + pick);
+    public static void setPicked(int game, int pick, int pickset) {
+        Log.d(TAG, "setPicked([Game]" + game + ",[pick]" + pick + ",[pickset]" + pickset);
+
+        List<Pick> records = SQLite.select()
+                .from(Pick.class)
+                .where(Pick_Table.picksetId.eq(pickset)).queryList();
+        Log.d(TAG, "records" + records.get(1));
+        Pick p;
+        for (int i = 0; i < records.size(); i++) {
+            p = records.get(i);
+            Log.d(TAG, "Pick: " + p.getPickId() +
+                    " | Game: " + p.getGameId() +
+                    " | Pickset: " + p.getPicksetId() +
+                    " | Winner: " + p.getPickedWinner());
+        }
+//        if (record == null)
+//            Log.d(TAG, "No pick exists for " + game + " in pickset " + pickset);
+//        else
+//            Log.d(TAG, "Pick created with pickID " + record.getPickId());
     }
 
     public static void createPickset(int bracket, String name) {
-
-
         //TODO: create set of picks for given bracket
+    }
+
+    public int getcPickset() {
+        return cPickset;
+    }
+
+    public void setcPickset(int cPickset) {
+        this.cPickset = cPickset;
+    }
+
+    public int getcBracket() {
+        return cBracket;
+    }
+
+    public void setcBracket(int cBracket) {
+        this.cBracket = cBracket;
     }
 }
