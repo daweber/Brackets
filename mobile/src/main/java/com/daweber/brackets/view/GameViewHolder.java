@@ -28,6 +28,10 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
         mListener = listener;
 
+        gameID = 0;
+        pickID = 0;
+        picksetID = 0;
+
         viewTeamOne = (ResizeTextView) v.findViewById(R.id.team_one);
         pickTeamOne = (ImageView) v.findViewById(R.id.team_one_pick);
 
