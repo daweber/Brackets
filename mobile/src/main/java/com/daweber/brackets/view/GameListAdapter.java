@@ -44,36 +44,93 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
         Game g = gameList.get(i);
         int gameId = g.getGameId();
 
+        // Setting references to Pickset and Game
         gameCard.picksetID = mPickset;
         gameCard.gameID = gameId;
+
+        // Setting Game Details and Region
         gameCard.viewGameDetails.setText(g.getGameDetails());
         gameCard.viewBracketRegion.setText(Game.REGION[g.getBracketRegion()].toUpperCase());
 
+        // Getting game's teams
         String teamOne = g.getTeamOne();
         String teamTwo = g.getTeamTwo();
 
-        // TODO: get pickedTeam name if team name is a number
-        if (teamOne.length() <= 2) {
+        // Setting Team One
+        if (teamOne.length() <= 2) { // Team One is a reference
 
-            if (true)
-                gameCard.viewTeamOne
-                        .setText(SQLite.select().from(Game.class)
-                                .where(Game_Table.gameId.eq(Integer.parseInt(teamOne))).querySingle()
-                                .getTeamOne());
+            int feedGameOne = Integer.parseInt(teamOne);
 
-            gameCard.viewTeamOne
-                    .setText(String.format("%s\u00A0%s", mContext
-                            .getString(R.string.unpicked_team_prefix), teamOne));
-        } else
+            Pick feedPickOne = SQLite.select()
+                    .from(Pick.class)
+                    .where(Pick_Table.picksetId.eq(mPickset))
+                    .and(Pick_Table.gameId.eq(feedGameOne)).querySingle();
+
+            if (feedPickOne != null) {
+
+                // Setting Team One Name from feed Pick
+                switch (feedPickOne.getPickedWinner()) {
+                    case 2:
+                        gameCard.viewTeamOne
+                                .setText(SQLite.select().from(Game.class)
+                                        .where(Game_Table.gameId.eq(feedGameOne)).querySingle()
+                                        .getTeamTwo());
+                        break;
+                    case 1:
+                        gameCard.viewTeamOne
+                                .setText(SQLite.select().from(Game.class)
+                                        .where(Game_Table.gameId.eq(feedGameOne)).querySingle()
+                                        .getTeamOne());
+                        break;
+                    case 0:
+                        gameCard.viewTeamOne
+                                .setText(String.format("%s\u00A0%s", mContext
+                                        .getString(R.string.unpicked_team_prefix), teamOne));
+                        break;
+                }
+            } else
+                Log.d(TAG, "Pick for feeder game one not in DB");
+        } else // Set Team One Name from Game record
             gameCard.viewTeamOne.setText(teamOne);
 
-        if (teamTwo.length() <= 2)
-            gameCard.viewTeamTwo
-                    .setText(String.format("%s\u00A0%s", mContext
-                            .getString(R.string.unpicked_team_prefix), teamTwo));
-        else
+        // Setting Team Two Name
+        if (teamTwo.length() <= 2) { // Team One is a reference
+
+            int feedGameTwo = Integer.parseInt(teamTwo);
+
+            Pick feedPickTwo = SQLite.select()
+                    .from(Pick.class)
+                    .where(Pick_Table.picksetId.eq(mPickset))
+                    .and(Pick_Table.gameId.eq(feedGameTwo)).querySingle();
+
+            if (feedPickTwo != null) {
+
+                // Setting Team One Name from feed Pick
+                switch (feedPickTwo.getPickedWinner()) {
+                    case 2:
+                        gameCard.viewTeamTwo
+                                .setText(SQLite.select().from(Game.class)
+                                        .where(Game_Table.gameId.eq(feedGameTwo)).querySingle()
+                                        .getTeamTwo());
+                        break;
+                    case 1:
+                        gameCard.viewTeamTwo
+                                .setText(SQLite.select().from(Game.class)
+                                        .where(Game_Table.gameId.eq(feedGameTwo)).querySingle()
+                                        .getTeamOne());
+                        break;
+                    case 0:
+                        gameCard.viewTeamTwo
+                                .setText(String.format("%s\u00A0%s", mContext
+                                        .getString(R.string.unpicked_team_prefix), teamOne));
+                        break;
+                }
+            } else
+                Log.d(TAG, "Pick for feeder game one not in DB");
+        } else // Set Team Two Name from Game record
             gameCard.viewTeamTwo.setText(teamTwo);
 
+        // Get game pick
         Pick gamePick = SQLite.select()
                 .from(Pick.class)
                 .where(Pick_Table.picksetId.eq(mPickset))
@@ -81,8 +138,10 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
 
         if (gamePick != null) {
 
+            // Setting reference to Pick
             gameCard.pickID = gamePick.getPickId();
 
+            // Setting visibility of pick icon
             switch (gamePick.getPickedWinner()) {
                 case 1:
                     gameCard.pickTeamOne.setVisibility(View.VISIBLE);
@@ -97,10 +156,9 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
                     gameCard.pickTeamTwo.setVisibility(View.GONE);
                     break;
             }
-        } else {
 
-            gameCard.pickTeamOne.setVisibility(View.GONE);
-            gameCard.pickTeamTwo.setVisibility(View.GONE);
+        } else {
+            Log.d(TAG, "Pick does not exist in DB");
         }
     }
 
