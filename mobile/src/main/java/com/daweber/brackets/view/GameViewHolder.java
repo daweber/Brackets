@@ -23,6 +23,8 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     protected int pickID;
     protected int picksetID;
 
+    protected int pickedWinner;
+
     public GameViewHolder(View v, GameCardClickListener listener) {
         super(v);
 
@@ -31,6 +33,8 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         gameID = 0;
         pickID = 0;
         picksetID = 0;
+
+        pickedWinner = 0;
 
         viewTeamOne = (ResizeTextView) v.findViewById(R.id.team_one);
         pickTeamOne = (ImageView) v.findViewById(R.id.team_one_pick);

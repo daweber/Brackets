@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.daweber.brackets.R;
+import com.daweber.brackets.model.PicksetGames;
 import com.daweber.brackets.view.activity.BracketActivity;
 import com.daweber.brackets.vo.Game;
 import com.daweber.brackets.vo.Game_Table;
@@ -23,11 +24,11 @@ import java.util.List;
 public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
     private static final String TAG = "b64.GameListAdapter";
 
-    private List<Game> gameList;
+    private List<PicksetGames> gameList;
     private Context mContext;
     private int mPickset;
 
-    public GameListAdapter(Context context, List<Game> gameList, int picksetId) {
+    public GameListAdapter(Context context, List<PicksetGames> gameList, int picksetId) {
         this.mContext = context;
         this.gameList = gameList;
         this.mPickset = picksetId;
@@ -41,7 +42,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
     @Override
     public void onBindViewHolder(GameViewHolder gameCard, int i) {
 
-        Game g = gameList.get(i);
+        PicksetGames g = gameList.get(i);
         int gameId = g.getGameId();
 
         // Setting references to Pickset and Game

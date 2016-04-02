@@ -10,10 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.daweber.brackets.R;
+import com.daweber.brackets.model.PicksetGames;
 import com.daweber.brackets.view.GameListAdapter;
 import com.daweber.brackets.view.activity.BracketActivity;
 import com.daweber.brackets.vo.Game;
 import com.daweber.brackets.vo.Game_Table;
+import com.daweber.brackets.vo.Pick;
+import com.daweber.brackets.vo.Pick_Table;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
@@ -74,12 +77,25 @@ public class RoundFragment extends Fragment {
         roundList.setAdapter(roundListAdapter);
     }
 
-    private List<Game> getRoundGameList(int round) {
+    private List<PicksetGames> getRoundGameList(int round) {
+
         return SQLite
-                .select()
+                .select(Game_Table.gameId, Game_Table.bracketRound,
+                        Game_Table.bracketRegion, Game_Table.gameOver,
+                        Game_Table.teamOne, Game_Table.teamOneScore,
+                        Game_Table.teamTwo, Game_Table.teamTwoScore,
+                        Game_Table.gameDetails, Pick_Table.pickedWinner)
                 .from(Game.class)
-                .where(Game_Table.bracketRound.eq(round))
-                .and(Game_Table.bracketId.eq(mActivity.getcBracket())).queryList();
+                .innerJoin(Pick.class)
+                .on(Game_Table.gameId.withTable().eq(Pick_Table.gameId.withTable()))
+                .where(Pick_Table.picksetId.eq(mActivity.getcPickset()))
+                .queryCustomList(PicksetGames.class);
+
+//        return SQLite
+//                .select()
+//                .from(Game.class)
+//                .where(Game_Table.bracketRound.eq(round))
+//                .and(Game_Table.bracketId.eq(mActivity.getcBracket())).queryList();
     }
 
     public int getRoundNumber() {

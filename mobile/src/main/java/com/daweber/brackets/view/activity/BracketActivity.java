@@ -1,5 +1,6 @@
 package com.daweber.brackets.view.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerTitleStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
@@ -15,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.daweber.brackets.App;
@@ -26,7 +30,6 @@ import com.daweber.brackets.vo.Bracket_Table;
 import com.daweber.brackets.vo.Pick;
 import com.daweber.brackets.vo.Pickset;
 import com.daweber.brackets.vo.Pickset_Table;
-import com.raizlabs.android.dbflow.runtime.TransactionManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 /**
@@ -167,7 +170,7 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_share:
-                putDataTest();
+                getTest();
                 //Toast.makeText(this, "share Bracket coming soon", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_lock_toggle:
@@ -178,13 +181,53 @@ public class BracketActivity extends AppCompatActivity implements View.OnClickLi
         return super.onOptionsItemSelected(item);
     }
 
-    private void putDataTest() {
-        Pick p = new Pick();
-        p.setPicksetId(1);
-        p.setGameId(0);
-        p.setPickedWinner(0);
-        TransactionManager.getInstance().saveOnSaveQueue(p);
+    private void getTest() {
+        RelativeLayout linearLayout = new RelativeLayout(this);
+        final NumberPicker aNumberPicker = new NumberPicker(this);
+        aNumberPicker.setMaxValue(1);
+        aNumberPicker.setMinValue(1);
 
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+        RelativeLayout.LayoutParams numPicerParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+        numPicerParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        linearLayout.setLayoutParams(params);
+        linearLayout.addView(aNumberPicker, numPicerParams);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Run Test...");
+        alertDialogBuilder.setView(linearLayout);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                runTest(aNumberPicker.getValue());
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void runTest(int test) {
+        switch (test) {
+            case 1:
+                Log.d(TAG, "Print Current Pickset:\n\n");
+
+                break;
+            default:
+                break;
+        }
     }
 
     private void toggleActionBarLock(MenuItem item) {
